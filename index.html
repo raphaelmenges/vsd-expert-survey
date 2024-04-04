@@ -1,0 +1,446 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Usability Analysis on Dynamic Contents</title>
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+
+	<!-- Styling -->
+	<link href="/assets/global.css" rel="stylesheet">
+
+	<!-- Loading font awesome -->
+	<style name="FontAwesome">
+		@font-face {
+			font-family: 'FontAwesome';
+			src: url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot');
+			src: url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+			     url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'),
+			     url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.woff') format('woff'),
+			     url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.ttf') format('truetype'),
+			     url('/assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.svg?#fontawesomeregular') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+	<link href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- dump-survey must be included before any use -->
+	<script type="text/javascript" src="/js/StupidSurvey.js"></script> 
+
+</head>
+
+<body>
+
+<div class="page">
+
+<!-- Logos -->
+<div class="logos">
+	<a target="_blank" href="https://west.uni-koblenz.de"><img src="./assets/west.png" style="height: 64px"></a>
+	<a target="_blank" href="https://www.uni-koblenz-landau.de/de"><img src="./assets/uni.png" style="height: 40px"></a>
+	<a target="_blank" href="http://gazemining.de/index_en.html"><img src="./assets/gazemining.png" style="height: 72px"></a>
+</div>
+
+
+<div id="survey"></div>
+
+</div> <!-- page -->
+
+<!-- Financial support -->
+<div style="text-align: center; font-size: 10; margin-bottom: 12px; color: darkgray">We acknowledge the financial support by the Federal Ministry of Education and Research of Germany under the project number 01IS17095B. Responsible for this survey and contact: raphaelmenges@uni-koblenz.de</div>
+
+<script type="text/javascript">
+
+// TODO
+// - URL change as trigger for screenshot
+// - mention 5 fps in screen recordings
+
+// Define suvey and its pages
+var s = StupidSurvey;
+s.init(document.getElementById("survey"));
+
+// Header items
+s.pushHeaderItem(new s.StrongSeparator());
+
+// #########################################################################################
+// Macros
+// #########################################################################################
+
+function representationOptions(page) {
+	page.push(new s.Check("representation_video_camera", "Video camera filming the participant and screen"));
+	page.push(new s.Check("representation_screen_recording", "Screen recording on the computer that the participant is operating"));
+	page.push(new s.Check("representation_screenshots", "Simple screenshots from a screen recording"));
+	page.push(new s.Check("representation_composed", "Composed image (e.g., entire Web page on one big screenshot)"));
+	page.push(new s.Check("representation_think_aloud", "Take notes while sitting next to the participant during a study with data on second screen, e.g., gaze overlay"));
+	page.push(new s.Check("representation_think_aloud_remote", "Live screencast during remote study"));
+	page.push(new s.Check("representation_recorded_dom", "Store DOM tree of Web page on server alongside participant data"));
+	page.push(new s.Check("representation_live_dom", "Only store participant data and later analyze on live Web page"));
+	page.push(new s.Question("Any other method of stimulus recording not mentioned above?"));
+	page.push(new s.Area("representation_other"));
+}
+
+// #########################################################################################
+// General
+// #########################################################################################
+var page = new s.Page("general"); s.pushPage(page);
+page.push(new s.Headline("Usability Analysis on Dynamic Contents", 1));
+page.push(new s.Paragraph("Welcome to a survey about usability analysis on dynamic contents of Web pages. This survey is conducted by researchers of the University Koblenz-Landau, Institute for Web Science and Technologies, as part of the GazeMining research project. The survey targets experts in usability studies who perform behavioral studies. We want to learn about their workflow and whether our method can support their work."));
+page.push(new s.Separator());
+
+// Disclaimer
+page.push(new s.Headline("Before you start", 3));
+page.push(new s.Paragraph("This survey takes approximately 20 minutes. Please make sure to display this Web page with at least 1024px in width on a desktop monitor - best 27 inches. This survey is designed to be filled via mouse and keyboard, touch input is not supported. We highly recommend to use a recent version of Mozilla Firefox or Google Chrome to fill this survey. We also recommend to close other tabs and not perform heavy load on your computer while filling the survey, as we display rich multimedia contents. We suggest you not to provide personal details like your name or organization name revealing specific identities in any answer."));
+page.push(new s.Separator());
+
+// Header
+page.push(new s.Headline("Demographics", 2));
+page.push(new s.Paragraph("Enter your demographics in the following."));
+page.push(new s.Separator());
+
+// Gender
+page.push(new s.Question("What is your gender?"));
+page.push(new s.Select("gender", ["female", "male", "other", "prefer not to say "], true));
+
+// Age
+page.push(new s.Question("What is your age?"));
+page.push(new s.Numerical("age", 0, true));
+
+// Profession
+page.push(new s.Question("What is you job title?"));
+page.push(new s.Text("job", true));
+
+page.push(new s.Question("How many usability studies have you performed?"));
+page.push(new s.Radio("number_studies", ["0 studies", "1-3 studies", "4-10 studies", "11+ studies"], true));
+
+page.push(new s.Question("How many years have you been in the profession of usability analysis?"));
+page.push(new s.Numerical("years_profession", 0, true));
+
+// You are part of a in-house usability evaluation group or a specialized usability company that consults other companies?
+
+// #########################################################################################
+// Expertise
+// #########################################################################################
+var page = new s.Page("expertise"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Expertise", 2));
+page.push(new s.Paragraph("Provide details about your expertise below."));
+page.push(new s.Separator());
+
+// Product
+page.push(new s.Headline("Product", 3));
+page.push(new s.Question("Which kind of product do you evaluate in your studies?"));
+page.push(new s.Check("evaluates_web_pages", "Web pages"));
+page.push(new s.Check("evaluates_desktop", "Desktop apps"));
+page.push(new s.Check("evaluates_mobile", "Mobile apps"));
+page.push(new s.Check("evaluates_ads", "Advertisements"));
+page.push(new s.Question("Any further product not mentioned above?"));
+page.push(new s.Text("evaluates_other"));
+page.push(new s.Separator());
+
+// Modality
+page.push(new s.Headline("Modalities", 3));
+page.push(new s.Question("Which kind of modalities (i.e., user input) do you consider in your studies?"));
+page.push(new s.Check("modality_mouse_clicks", "Mouse clicks"));
+page.push(new s.Check("modality_mouse_movement", "Mouse movement"));
+page.push(new s.Check("modality_keyboard", "Keyboard input"));
+page.push(new s.Check("modality_touch", "Touch input"));
+page.push(new s.Check("modality_eye", "Eye gaze"));
+page.push(new s.Check("modality_speech", "Speech"));
+page.push(new s.Check("modality_facial_expression", "Facial expression"));
+page.push(new s.Question("Any further modality not mentioned above?"));
+page.push(new s.Text("modality_other"));
+page.push(new s.Separator());
+
+// Representation
+page.push(new s.Headline("Recording", 3));
+page.push(new s.Question("How do you record the stimulus (i.e., screen contents shown to the participants) in your studies?"));
+representationOptions(page);
+page.push(new s.Separator());
+
+// Analysis
+page.push(new s.Headline("Analysis", 3));
+page.push(new s.Question("Which kind of visualizations and annotations do you employ in your studies?"));
+page.push(new s.Check("analysis_mousetrace", "Mouse trace"));
+page.push(new s.Check("analysis_heatmap_mouse", "Heatmap of mouse"));
+page.push(new s.Check("analysis_heatmap_gaze", "Heatmap of gaze"));
+page.push(new s.Check("analysis_attentionmap", "Attention map"));
+page.push(new s.Check("analysis_scrollmap", "Scroll map"));
+page.push(new s.Check("analysis_scanpath", "Scanpath of gaze"));
+page.push(new s.Check("analysis_aoi_mouse", "Area of interest (AOI) for mouse"));
+page.push(new s.Check("analysis_aoi_gaze", "Area of interest (AOI) for gaze"));
+page.push(new s.Check("analysis_markers", "Markers with comments"));
+page.push(new s.Question("Any other visualizations or annotations not mentioned above?"));
+page.push(new s.Area("analysis_other"));
+page.push(new s.Separator());
+
+// Tools
+page.push(new s.Headline("Tools", 3));
+page.push(new s.Question("Which tools do you use to perform and evaluate your studies?"));
+page.push(new s.Check("tool_tobii", "Tobii Studio / Tobii Pro Studio"));
+page.push(new s.Check("tool_smi", "SMI beGaze"));
+page.push(new s.Check("tool_eyevido", "EYEVIDO Lab"));
+page.push(new s.Check("tool_blickshift", "Blickshift"));
+page.push(new s.Check("tool_realeye", "RealEye"));
+page.push(new s.Check("tool_cooltool", "CoolTool"));
+page.push(new s.Check("tool_sticky", "Sticky (by Tobii Pro)"));
+page.push(new s.Check("tool_google_analytics", "Google Analytics"));
+page.push(new s.Check("tool_excel", "Microsoft Excel"));
+page.push(new s.Question("Any further tools not mentioned above?"));
+page.push(new s.Area("tool_other"));
+
+// #########################################################################################
+// Scrolling page with screen recordings
+// #########################################################################################
+var page = new s.Page("challenge"); s.pushPage(page);
+
+// Challenge
+page.push(new s.Headline("Challenges with Dynamic Contents", 2));
+page.push(new s.Separator());
+
+// Explanation
+page.push(new s.Paragraph("In usability analysis that is based on behavioral studies, it is most important to know what users have experienced during operating the interface. Usually, one want to aggregate the eye tracking and mouse data from multiple users to gather an overall impression of the usability of the interface. This aggregation is trivial on static contents like an image. However, the contents on Web sites might dynamically change their appearance during interaction. A menu might expand and overlay the page, or a carousel can show different images over time. These changes are not reflected in the URL but happen within each Web page. These dynamics make it more difficult to aggregate the behavior of multiple users and can render the analysis of a study a time demanding and difficult task."));
+page.push(new s.Separator());
+
+// Transition
+page.push(new s.Paragraph("Next, we show you three different scenarios of usability analysis on Web sites with dynamic contents. We ask for your feedback on how you would approach such analysis task and whether our method for data preparation could support you in future."));
+
+// #########################################################################################
+// Scrolling page with screen recordings
+// #########################################################################################
+var page = new s.Page("scrollingPage1"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Footer Menu", 2));
+page.push(new s.Paragraph("Here is an image of the footer menu on the Walmart Web site."));
+page.push(new s.Picture("./survey/tasks/walmart-task.png"));
+page.push(new s.Space(16));
+page.push(new s.Paragraph("The footer menu is on the bottom of every page of the Walmart Web site. Sometimes it is covered by a dynamic navigation menu. In the following, imagine your task is to determine whether the footer menu has been useful to the participants of your study."));
+page.push(new s.Separator());
+
+// Videos
+page.push(new s.Headline("Screen Recordings", 3));
+page.push(new s.Paragraph("Here are screen recordings of four users browsing the Walmart Web site. Skim through the videos to get an impression of the analysis task."));
+page.push(new s.VideoWall("walmart"));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Representation
+page.push(new s.Question("How would you record the stimulus for this task with <b>20 participants</b> in your current workflow?"));
+representationOptions(page);
+
+// #########################################################################################
+// Scrolling page with discovered stimuli
+// #########################################################################################
+var page = new s.Page("scrollingPage2"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Footer Menu. Part 2", 2));
+page.push(new s.Paragraph("We are still interested in the footer menu on the Walmart Web site."));
+page.push(new s.Picture("./survey/tasks/walmart-task.png"));
+page.push(new s.Separator());
+
+// Stimuli
+page.push(new s.Paragraph("Now, we explain and demonstrate our method for stimulus recording."));
+page.push(new s.Paragraph("In our method, we take all screen recordings of participants on a Web site. From each video frame to the next video frame, we automatically decide whether something has visually changed significantly on the screen. When there is no visual change, we keep stitching the video frames towards a big screenshot. When we decide there is a visual change, we start stitching a new screenshot. These big screenshots are then merged across all recordings, providing you with big screenshots each representing an unique visual status of a Web site.<br/><br/><b>We call these big screenshots \"Discovered Stimuli.\"</b><br/><br/> One could overlay them with scanpaths or mouse traces of the participants."));
+page.push(new s.Separator());
+page.push(new s.Headline("Our method: discovered stimuli", 3));
+page.push(new s.Paragraph("Here is a gallery of discovered stimuli from the screen recordings on the Walmart site from the previous page of the survey. Please browse through the discovered stimuli and try to find the footer menu."));
+page.push(new s.Gallery(["1.jpg", "28.jpg", "55.jpg", "62.jpg", "63.jpg", "76.jpg", "101.jpg", "102.jpg", "fixed-30.jpg", "fixed-45.jpg", "fixed-46.jpg", "fixed-47.jpg", "fixed-48.jpg", "fixed-49.jpg", "fixed-50.jpg"], "./survey/stimuli_cropped_compress/walmart/", 900, 1000, "./survey/stimuli_overlayed_cropped_compress/walmart/"));
+page.push(new s.Paragraph("You can drag-and-drop in the canvas to move the discovered stimulus. Use the controls above the canvas to browse through the discovered stimuli, change the zoom level, reset the position in the canvas, or overlay with scanpath and mouse traces. The initial zoom is 25%."));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Recall
+page.push(new s.Question("In how many discovered stimuli can you <b>recognize</b> the footer menu? It is ok if the footer menu is overlapped by other contents, as long as you can recognize it."));
+page.push(new s.Radio("element_recognized", ["None", "In 1 to 10", "In 11 to 13", "In 14", "In all of them"], true));
+page.push(new s.Separator());
+
+// Opinion
+page.push(new s.Paragraph("On the previous page you have selected how you would approach this analysis task with your current workflow in a study with 20 participants. Now, answer following questions in comparison to the method that you chose on the previous survey page."));
+page.push(new s.Question("I could work with the discovered stimuli as <b>accurate</b> as with the method in my current workflow."));
+page.push(new s.Radio("element_accuracy", ["Strongly Disagree", "Disagree", "Undecided", "Agree", "Strongly Agree"], true));
+page.push(new s.Question("I could <b>save time</b> when working on the discovered stimuli instead with the method in my current workflow."));
+page.push(new s.Radio("element_time", ["Strongly Disagree", "Disagree", "Undecided", "Agree", "Strongly Agree"], true));
+
+// #########################################################################################
+// Dynamic carousel with screen recordings
+// #########################################################################################
+var page = new s.Page("dynamicCarousel1"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Dynamic Carousel", 2));
+page.push(new s.Paragraph("Here is an image of a dynamic carousel slide that appears on some pages of the WebMD Web site."));
+page.push(new s.Picture("./survey/tasks/webmd-task.png"));
+page.push(new s.Space(16));
+page.push(new s.Paragraph("The carousel automatically and manually switches through different slides. In addition, the top menu can overlay the carousel if expanded. Imagine you want to analyze the attention of participants in your study on this specific slide of the carousel."));
+page.push(new s.Separator());
+
+// Videos
+page.push(new s.Headline("Screen Recordings", 3));
+page.push(new s.Paragraph("Here are screen recordings of four users browsing the WebMD Web site. Skim through the videos to get an impression of the analysis task."));
+page.push(new s.VideoWall("webmd"));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Representation
+page.push(new s.Question("How would you record the stimulus for this task with <b>20 participants</b> in your current workflow?"));
+representationOptions(page);
+
+// #########################################################################################
+// Dynamic carousel with discovered stimuli
+// #########################################################################################
+var page = new s.Page("dynamicCarousel2"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Dynamic Carousel. Part 2", 2));
+page.push(new s.Paragraph("We are still interested in the carousel slide on the WebMD Web site."));
+page.push(new s.Picture("./survey/tasks/webmd-task.png"));
+page.push(new s.Separator());
+
+// Stimuli
+page.push(new s.Headline("Our method: discovered stimuli", 3));
+page.push(new s.Paragraph("Here is a gallery of discovered stimuli from the screen recordings on the WebMD site from the previous page of the survey. Discovered stimuli are big screenshots, that are merged across all recordings. Each discovered stimulus represents a unique visual status of a Website. Please browse through the discovered stimuli and try to find the carousel slide."));
+page.push(new s.Gallery(["58.jpg", "6.jpg", "40.jpg", "53.jpg", "55.jpg"], "./survey/stimuli_cropped_compress/webmd/", 900, 600, "./survey/stimuli_overlayed_cropped_compress/webmd/"));
+page.push(new s.Paragraph("You can drag-and-drop in the canvas to move the discovered stimulus. Use the controls above the canvas to browse through the discovered stimuli, change the zoom level, reset the position in the canvas, or overlay with scanpath and mouse traces. The initial zoom is 25%."));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Recall
+page.push(new s.Question("In how many discovered stimuli can you <b>recognize</b> the carousel slide? It is ok if the carousel slide is overlapped by other contents, as long as you can recognize it."));
+page.push(new s.Radio("element_recognized", ["None", "In 1 to 2", "In 3", "In 4", "In all of them"], true));
+page.push(new s.Separator());
+
+// Opinion
+page.push(new s.Paragraph("On the previous page you have selected how you would approach this analysis task with your current workflow in a study with 20 participants. Now, answer following questions in comparison to the method that you chose on the previous survey page."));
+page.push(new s.Question("I could work with the discovered stimuli as <b>accurate</b> as with the method in my current workflow."));
+page.push(new s.Radio("element_accuracy", ["Strongly Disagree", "Disagree", "Undecided", "Agree", "Strongly Agree"], true));
+page.push(new s.Question("I could <b>save time</b> when working on the discovered stimuli instead with the method in my current workflow."));
+page.push(new s.Radio("element_time", ["Strongly Disagree", "Disagree", "Undecided", "Agree", "Strongly Agree"], true));
+
+// #########################################################################################
+// Expanding menu with screen recordings
+// #########################################################################################
+var page = new s.Page("expandingMenu1"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Expanding Menu", 2));
+page.push(new s.Paragraph("Here is an image of a dynamic expanding top menu on the Guardian Web site."));
+page.push(new s.Picture("./survey/tasks/guardian-task.png"));
+page.push(new s.Space(16));
+page.push(new s.Paragraph("The menu expands upon clicking on \"more\" in the header. When expanded, it overlays the contents on the Web page behind. Imagine you want to analyze whether the contents of the menu are useful for the participants of your study."));
+page.push(new s.Separator());
+
+// Videos
+page.push(new s.Headline("Screen Recordings", 3));
+page.push(new s.Paragraph("Here are screen recordings of four users browsing the Guardian Web site. Skim through the videos to get an impression of the analysis task."));
+page.push(new s.VideoWall("guardian"));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Representation
+page.push(new s.Question("How would you record the stimulus for this task with <b>20 participants</b> in your current workflow?"));
+representationOptions(page);
+
+// #########################################################################################
+// Expanding menu with discovered stimuli
+// #########################################################################################
+var page = new s.Page("expandingMenu2"); s.pushPage(page);
+
+// Header
+page.push(new s.Headline("Analyze Usability of a Expanding Menu. Part 2", 2));
+page.push(new s.Paragraph("We are still interested in the expanding top menu on the Guardian Web site."));
+page.push(new s.Picture("./survey/tasks/guardian-task.png"));
+page.push(new s.Separator());
+
+// Stimuli
+page.push(new s.Headline("Our method: discovered stimuli", 3));
+page.push(new s.Paragraph("Here is a gallery of our discovered stimuli from the screen recordings on the Guardian Web site from the previous page of the survey. Discovered stimuli are big screenshots, that are merged across all recordings. Each discovered stimulus represents a unique visual status of a Website. Please browse through the discovered stimuli and try to find the menu."));
+page.push(new s.Gallery(["14.jpg", "18.jpg", "22.jpg", "2.jpg"], "./survey/stimuli_cropped_compress/guardian/", 900, 600, "./survey/stimuli_overlayed_cropped_compress/guardian/"));
+page.push(new s.Paragraph("You can drag-and-drop in the canvas to move the discovered stimulus. Use the controls above the canvas to browse through the discovered stimuli, change the zoom level, reset the position in the canvas, or overlay with scanpath and mouse traces. The initial zoom is 25%."));
+page.push(new s.Separator());
+
+// Questions
+page.push(new s.Headline("Questions", 2));
+page.push(new s.Separator());
+
+// Recall
+page.push(new s.Question("In how many discovered stimuli can you <b>recognize</b> the expanding top menu? It is ok if the expanding top menu is overlapped by other contents, as long as you can recognize it."));
+page.push(new s.Radio("element_recognized", ["None", "In 1", "In 2", "In 3", "In all of them"], true));
+page.push(new s.Separator());
+
+// Opinion
+page.push(new s.Paragraph("On the previous page you have selected how you would approach this analysis task with your current workflow in a study with 20 participants. Now, answer following questions in comparison to the method that you chose on the previous survey page."));
+page.push(new s.Question("I could work with the discovered stimuli as <b>accurate</b> as with the method in my current workflow."));
+page.push(new s.Radio("element_accuracy", ["Strongly Disagree", "Disagree","Undecided", "Agree", "Strongly Agree"], true));
+page.push(new s.Question("I could <b>save time</b> when working on the discovered stimuli instead with the method in my current workflow."));
+page.push(new s.Radio("element_time", ["Strongly Disagree", "Disagree","Undecided", "Agree", "Strongly Agree"], true));
+
+// #########################################################################################
+// Feedback
+// #########################################################################################
+var page = new s.Page("feedback"); s.pushPage(page);
+
+page.push(new s.Headline("Feedback", 2));
+page.push(new s.Paragraph("We would like to gather general feedback from you about our method of \"Discovered Stimuli.\""));
+page.push(new s.Separator());
+
+page.push(new s.Question("If our method could <b>automatically</b> transform screen recordings into discovered stimuli like in the galleries, how likely would you use our method in your workflow of performing usability analysis?"));
+page.push(new s.Radio("full-automatic", ["Definitely Not", "Probably Not", "Possibly", "Very Probably", "Definitely"], true));
+
+page.push(new s.Question("Let's say our method requires information about what you consider as a visual change (e.g., carouse slide changes, menu expands, ...) on a Web page. Thus, you would have to go through a single screen recording of your study and mark those video frames, in which something changes significantly in your opinion. How likely would you then use our <b>semi-automatical</b> method in your workflow?"));
+page.push(new s.Radio("semi-automatic", ["Definitely Not", "Probably Not", "Possibly", "Very Probably", "Definitely"], true));
+
+page.push(new s.Question("How <b>novel</b> appears our method of discovered stimuli to you?"));
+page.push(new s.Radio("novelty", ["Not at all", "Slightly", "Moderately", "Very", "Extremely"], true));
+page.push(new s.Separator());
+
+// Last words
+page.push(new s.Headline("Last words", 3));
+page.push(new s.Question("Do you have any further feedback about the challenges in usability analysis with dynamic contents?"));
+page.push(new s.Area("feedback"));
+page.push(new s.Separator());
+
+// #########################################################################################
+// Submission
+// #########################################################################################
+var page = new s.Page("submission"); s.pushPage(page);
+page.push(new s.Headline("Survey submission"));
+
+// Terms
+page.push(new s.Paragraph("By submitting this survey, you agree to pass your answers anonymously to our Web server which is located at the Unversity of Koblenz-Landau, Koblenz. You agree that we may publish your answers anonymously - together with others - to the public. We store your IP to identify mistakenly repeated submission. We will not publish your IP address."));
+page.push(new s.Check("agree_on_terms", "Yes, agree to above terms.", true));
+page.push(new s.Separator());
+
+// Submit!
+page.push(new s.Paragraph("Last, a check whether you are human. Provide the result of \"four + ❺\" as lowercase word."));
+page.push(new s.Text("passphrase", true, false));
+page.push(new s.Paragraph("Finally, please click on \"Submit data\" to submit your answers."));
+
+// Finalize survey
+s.finalize();
+
+</script>
+
+</body>
+
+</html>
