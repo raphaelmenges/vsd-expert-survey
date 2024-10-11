@@ -8,6 +8,9 @@ Survey to understand the usefullnes of visual stimuli discovery to experts in us
 ## Setup
 Bases on the [Survey Framework](https://github.com/Institute-Web-Science-and-Technologies/survey-framework). See the instructions of that repository for local and server setup.
 
+## Questions
+All questions of the survey are contained in the [index.html](index.html#L87) file.
+
 ## Analysis
 The results of the survey and analysis with an IPython Notebook thereof is stored under [analysis](./analysis).
 
