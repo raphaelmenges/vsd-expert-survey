@@ -11,8 +11,8 @@ Bases on the [Survey Framework](https://github.com/Institute-Web-Science-and-Tec
 ## Questions
 All questions of the survey are contained in the [index.html](index.html#L87) file.
 
-## Analysis
-The results of the survey and analysis with an IPython Notebook thereof is stored under [analysis](./analysis).
+## Results & Analysis
+The results of the survey and analysis with an IPython Notebook thereof is stored under [analysis](analysis).
 
 ## License
 >Copyright 2024 Raphael Menges
